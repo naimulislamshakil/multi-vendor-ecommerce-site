@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
 	Avatar,
 	Box,
@@ -6,24 +7,38 @@ import {
 	Container,
 	FormControlLabel,
 	Grid,
-	IconButton,
-	InputAdornment,
 	TextField,
 	Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+const regularExpression =
+	/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
+const userSchema = yup.object().shape({
+	email: yup.string().email('Invalid Email').required('Required'),
+	password: yup
+		.string()
+		.matches(regularExpression, 'Password Not Valid')
+		.required('Required'),
+});
 
 const index = () => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const [visiable, setVisiable] = useState(false);
-
-	const handleSubmit = () => {
-		console.log('gnasbvb');
-	};
+	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+		useFormik({
+			initialValues: {
+				email: '',
+				password: '',
+			},
+			validationSchema: userSchema,
+			onSubmit: (values) => {
+				console.log(values);
+			},
+		});
 	return (
 		<Container component="main" maxWidth="xs">
 			<Box
@@ -47,13 +62,13 @@ const index = () => {
 						color="secondary"
 						fullWidth
 						id="email"
-						// value={values.email}
-						// onBlur={handleBlur}
-						// onChange={handleChange}
+						value={values.email}
+						onBlur={handleBlur}
+						onChange={handleChange}
 						label="Email Address"
 						name="email"
-						// error={!!touched.email && !!errors.email}
-						// helperText={touched.email && errors.email}
+						error={!!touched.email && !!errors.email}
+						helperText={touched.email && errors.email}
 						autoComplete="email"
 						autoFocus
 					/>
@@ -64,14 +79,14 @@ const index = () => {
 						color="secondary"
 						fullWidth
 						name="password"
-						// value={values.password}
-						// onBlur={handleBlur}
-						// onChange={handleChange}
+						value={values.password}
+						onBlur={handleBlur}
+						onChange={handleChange}
 						label="Password"
 						type="password"
 						id="password"
-						// error={!!touched.password && !!errors.password}
-						// helperText={touched.password && errors.password}
+						error={!!touched.password && !!errors.password}
+						helperText={touched.password && errors.password}
 						autoComplete="current-password"
 					/>
 
