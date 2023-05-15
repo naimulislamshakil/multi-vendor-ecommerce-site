@@ -11,12 +11,14 @@ import {
 	Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as yup from 'yup';
 
 const index = () => {
+	const [avater, setAvater] = useState();
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({
 			initialValues,
@@ -25,6 +27,21 @@ const index = () => {
 				console.log(values);
 			},
 		});
+
+	const uplodeImage = (e) => {
+		const imageBB = 'aca65d68a0810361f2d2ced87f951d28';
+		const image = e.target.files[0];
+		let formData = new FormData();
+		formData.append('image', image);
+		const url = `https://api.imgbb.com/1/upload?key=${imageBB}`;
+
+		fetch(url, {
+			method: 'POST',
+			body: formData,
+		})
+			.then((res) => res.json())
+			.then((data) => setAvater(data.data.url));
+	};
 
 	return (
 		<Container component="main" maxWidth="xs">
@@ -109,6 +126,36 @@ const index = () => {
 						helperText={touched.password && errors.password}
 						autoComplete="current-password"
 					/>
+
+					<Box display="flex" height="auto" alignItems="center">
+						{avater ? (
+							<Avatar
+								alt="avater"
+								src={avater}
+								sx={{ width: 56, height: 56, border: '1px solid black' }}
+							/>
+						) : (
+							<AccountCircleIcon style={{ width: 56, height: 56 }} />
+						)}
+
+						<input
+							accept="image"
+							type="file"
+							id="select-image"
+							style={{ display: 'none' }}
+							onChange={uplodeImage}
+						/>
+						<label htmlFor="select-image">
+							<Button
+								style={{ marginLeft: '10px', backgroundColor: '#4cceac' }}
+								variant="contained"
+								component="span"
+							>
+								Upload Image
+							</Button>
+						</label>
+					</Box>
+
 					<FormControlLabel
 						control={<Checkbox value="remember" style={{ color: '#141414' }} />}
 						label="Remember me"
