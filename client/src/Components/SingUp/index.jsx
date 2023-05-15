@@ -10,35 +10,22 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
+import { useFormik } from 'formik';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { useFormik } from 'formik';
 import * as yup from 'yup';
-
-const regularExpression =
-	/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-
-const userSchema = yup.object().shape({
-	email: yup.string().email('Invalid Email').required('Required'),
-	password: yup
-		.string()
-		.matches(regularExpression, 'Password Not Valid')
-		.required('Required'),
-});
 
 const index = () => {
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({
-			initialValues: {
-				email: '',
-				password: '',
-			},
+			initialValues,
 			validationSchema: userSchema,
-			onSubmit: (values) => {
+			onSubmit: async (values) => {
 				console.log(values);
 			},
 		});
+
 	return (
 		<Container component="main" maxWidth="xs">
 			<Box
@@ -53,9 +40,43 @@ const index = () => {
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component="h1" variant="h5">
-					Sign in
+					Sign Up
 				</Typography>
 				<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+					<TextField
+						margin="normal"
+						required
+						color="secondary"
+						fullWidth
+						id="text"
+						value={values.firstName}
+						onBlur={handleBlur}
+						onChange={handleChange}
+						label="First Name"
+						name="firstName"
+						error={!!touched.firstName && !!errors.firstName}
+						helperText={touched.firstName && errors.firstName}
+						autoComplete="text"
+						autoFocus
+					/>
+
+					<TextField
+						margin="normal"
+						required
+						color="secondary"
+						fullWidth
+						id="text"
+						value={values.lastName}
+						onBlur={handleBlur}
+						onChange={handleChange}
+						label="Last Name"
+						name="lastName"
+						error={!!touched.lastName && !!errors.lastName}
+						helperText={touched.lastName && errors.lastName}
+						autoComplete="text"
+						autoFocus
+					/>
+
 					<TextField
 						margin="normal"
 						required
@@ -72,7 +93,6 @@ const index = () => {
 						autoComplete="email"
 						autoFocus
 					/>
-
 					<TextField
 						margin="normal"
 						required
@@ -89,7 +109,6 @@ const index = () => {
 						helperText={touched.password && errors.password}
 						autoComplete="current-password"
 					/>
-
 					<FormControlLabel
 						control={<Checkbox value="remember" style={{ color: '#141414' }} />}
 						label="Remember me"
@@ -104,17 +123,16 @@ const index = () => {
 							background: '#4cceac',
 						}}
 					>
-						Sign In
+						Sign Up
 					</Button>
 					<Grid container>
-						<Grid item xs>
-							<Link href="#" variant="body2" style={{ color: '#141414' }}>
-								Forgot password?
-							</Link>
-						</Grid>
-						<Grid item>
-							<Link to="/sing-up" variant="body2" style={{ color: '#141414' }}>
-								{"Don't have an account? Sign Up"}
+						<Grid item textAlign="center">
+							<Link
+								to="/login"
+								variant="body2"
+								style={{ color: '#141414', textAlign: 'center' }}
+							>
+								{'Alrady have an account? Sign In'}
 							</Link>
 						</Grid>
 					</Grid>
@@ -123,5 +141,25 @@ const index = () => {
 		</Container>
 	);
 };
+
+const initialValues = {
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+};
+
+const regularExpression =
+	/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
+const userSchema = yup.object().shape({
+	firstName: yup.string().required('Required'),
+	lastName: yup.string().required('Required'),
+	email: yup.string().email('Invalid Email').required('Required'),
+	password: yup
+		.string()
+		.matches(regularExpression, 'Password Not Valid')
+		.required('Required'),
+});
 
 export default index;

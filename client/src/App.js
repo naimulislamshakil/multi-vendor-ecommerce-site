@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
-import { FirstNav, Navbar, LoginPage } from './Route.js';
+import { FirstNav, Navbar, LoginPage, SingUpPage } from './Route.js';
 
 function App() {
 	return (
@@ -12,6 +12,7 @@ function App() {
 
 				<Routes>
 					<Route path="/login" element={<LoginPage />} />
+					<Route path="/sing-up" element={<SingUpPage />} />
 				</Routes>
 			</main>
 		</div>
