@@ -1,6 +1,8 @@
 import { CssBaseline } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import { FirstNav, Navbar, LoginPage, SingUpPage } from './Route.js';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	return (
@@ -15,6 +17,7 @@ function App() {
 					<Route path="/sing-up" element={<SingUpPage />} />
 				</Routes>
 			</main>
+			<ToastContainer />
 		</div>
 	);
 }

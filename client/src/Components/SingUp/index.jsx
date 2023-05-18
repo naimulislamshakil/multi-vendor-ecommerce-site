@@ -12,19 +12,34 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as yup from 'yup';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const index = () => {
 	const [avater, setAvater] = useState();
+	const navigate = useNavigate();
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({
 			initialValues,
 			validationSchema: userSchema,
 			onSubmit: async (values) => {
-				console.log(values);
+				const user = {
+					...values,
+					avatar: avater,
+				};
+
+				const res = await axios.post('http://localhost:5000/auth/singup', user);
+
+				if (res.data.status === 'Success') {
+					toast.success(res.data.message);
+					setTimeout(() => {
+						navigate('/login');
+					}, 3000);
+				}
 			},
 		});
 

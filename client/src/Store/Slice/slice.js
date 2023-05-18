@@ -7,11 +7,7 @@ const slice = createSlice({
 		token: null,
 		message: '',
 	},
-	reducers: {
-		setSingup: (state, action) => {
-			state.message = action.payload.message;
-		},
-	},
+	reducers: {},
 });
 
 export const { setSingup } = slice.actions;
