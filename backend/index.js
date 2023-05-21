@@ -12,7 +12,9 @@ app.use(express.json());
 
 // ADD MONGOOSE
 mongoose
-	.connect('mongodb://localhost:27017')
+	.connect(
+		`mongodb+srv://multi-vendor:${process.env.DB_PASS}@cluster0.x3ohfcq.mongodb.net/?retryWrites=true&w=majority`
+	)
 	.then(() => console.log('Multi-Vendor Database Connected Successfully!'))
 	.catch((err) => console.log(err));
 

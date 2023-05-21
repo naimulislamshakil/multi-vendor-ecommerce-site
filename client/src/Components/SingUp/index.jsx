@@ -18,6 +18,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { baseUrl } from '../../Config/ServerUrl';
 
 const index = () => {
 	const [avater, setAvater] = useState();
@@ -32,14 +33,14 @@ const index = () => {
 					avatar: avater,
 				};
 
-				const res = await axios.post('http://localhost:5000/auth/singup', user);
-
-				if (res.data.status === 'Success') {
-					toast.success(res.data.message);
-					setTimeout(() => {
-						navigate('/login');
-					}, 3000);
-				}
+				await axios.post(`${baseUrl}/auth/singup`, user).then((res) => {
+					if (res.data.status === 'Success') {
+						toast.success(res.data.message);
+						setTimeout(() => {
+							navigate('/login');
+						}, 3000);
+					}
+				});
 			},
 		});
 
