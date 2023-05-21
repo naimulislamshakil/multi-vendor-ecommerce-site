@@ -11,10 +11,12 @@ import {
 	Typography,
 } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { baseUrl } from '../../Config/ServerUrl';
+import { toast } from 'react-toastify';
 
 const regularExpression =
 	/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -28,6 +30,7 @@ const userSchema = yup.object().shape({
 });
 
 const index = () => {
+	const navigate = useNavigate();
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({
 			initialValues: {
@@ -35,8 +38,26 @@ const index = () => {
 				password: '',
 			},
 			validationSchema: userSchema,
-			onSubmit: (values) => {
-				console.log(values);
+			onSubmit: async (values) => {
+				await fetch(`${baseUrl}/auth/login`, {
+					method: 'POST',
+					headers: { 'content-type': 'application/json' },
+					body: JSON.stringify(values),
+				})
+					.then((res) => res.json())
+					.then((data) => {
+						if (data.status === 'Failed') {
+							toast.error(data.message);
+						}
+
+						if (data.status === 'Success') {
+							toast.success(data.message);
+							localStorage.setItem('token', data.token);
+							setTimeout(() => {
+								navigate('/');
+							}, 5000);
+						}
+					});
 			},
 		});
 	return (

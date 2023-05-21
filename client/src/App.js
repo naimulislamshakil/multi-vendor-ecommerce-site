@@ -17,7 +17,18 @@ function App() {
 					<Route path="/sing-up" element={<SingUpPage />} />
 				</Routes>
 			</main>
-			<ToastContainer />
+			<ToastContainer
+				position="bottom-center"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="dark"
+			/>
 		</div>
 	);
 }

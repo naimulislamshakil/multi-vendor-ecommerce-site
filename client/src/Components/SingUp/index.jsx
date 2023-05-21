@@ -33,14 +33,27 @@ const index = () => {
 					avatar: avater,
 				};
 
-				await axios.post(`${baseUrl}/auth/singup`, user).then((res) => {
-					if (res.data.status === 'Success') {
-						toast.success(res.data.message);
-						setTimeout(() => {
-							navigate('/login');
-						}, 3000);
-					}
-				});
+				fetch(`${baseUrl}/auth/singup`, {
+					method: 'POST',
+					headers: { 'content-type': 'application/json' },
+					body: JSON.stringify(user),
+				})
+					.then((res) => res.json())
+					.then((data) => {
+						if (data.status === 'Success') {
+							toast.success(data.message);
+							setTimeout(() => {
+								navigate('/login');
+							}, 3000);
+						}
+
+						if (data.status === 'Failed') {
+							toast.error(data.message);
+							setTimeout(() => {
+								navigate('/login');
+							}, 3000);
+						}
+					});
 			},
 		});
 

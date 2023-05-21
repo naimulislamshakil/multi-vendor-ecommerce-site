@@ -20,7 +20,6 @@ const userSchema = mongoose.Schema({
 		type: String,
 		required: [true, 'Please enter your password'],
 		minLength: [4, 'Password should be greater than 4 characters'],
-		select: false,
 	},
 	phoneNumber: {
 		type: Number,
@@ -67,8 +66,8 @@ userSchema.pre('save', function (next) {
 	if (!this.isModified('password')) return next();
 
 	const password = this.password;
-	const hashPassword = bcrypt.hashSync(password, 10);
-	this.password = hashPassword;
+	const hashedPassword = bcrypt.hashSync(password, 10);
+	this.password = hashedPassword;
 	next();
 });
 
