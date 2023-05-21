@@ -64,3 +64,20 @@ exports.loginUserHelper = async (req, res) => {
 		});
 	}
 };
+
+exports.getUserHelper = async (req, res) => {
+	try {
+		const user = await UserService.getUserService(req.user.id);
+		const { password: pass, ...other } = user.toObject();
+		res.status(200).json({
+			status: 'Success',
+			message: 'User Get Successfully',
+			user: other,
+		});
+	} catch (error) {
+		res.status(404).json({
+			status: 'Failed',
+			message: error.message,
+		});
+	}
+};

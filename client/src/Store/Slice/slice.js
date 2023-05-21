@@ -7,9 +7,13 @@ const slice = createSlice({
 		token: null,
 		message: '',
 	},
-	reducers: {},
+	reducers: {
+		setUser: (state, action) => {
+			state.user = action.payload.user;
+		},
+	},
 });
 
-export const { setSingup } = slice.actions;
+export const { setUser } = slice.actions;
 
 export default slice.reducer;
