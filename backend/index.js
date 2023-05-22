@@ -13,7 +13,8 @@ app.use(express.json());
 // ADD MONGOOSE
 mongoose
 	.connect(
-		`mongodb+srv://multi-vendor:${process.env.DB_PASS}@cluster0.x3ohfcq.mongodb.net/?retryWrites=true&w=majority`
+		`mongodb://multi-vendor:${process.env.DB_PASS}@ac-7tkmc4w-shard-00-00.snqqfox.mongodb.net:27017,ac-7tkmc4w-shard-00-01.snqqfox.mongodb.net:27017,ac-7tkmc4w-shard-00-02.snqqfox.mongodb.net:27017/?ssl=true&replicaSet=atlas-3y8ve3-shard-0&authSource=admin&retryWrites=true&w=majority`,
+		{ useNewUrlParser: true, useUnifiedTopology: true }
 	)
 	.then(() => console.log('Multi-Vendor Database Connected Successfully!'))
 	.catch((err) => console.log(err));

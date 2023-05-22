@@ -32,8 +32,8 @@ function App() {
 		<div className="app">
 			<CssBaseline />
 			<main className="content">
-				{/* <FirstNav />
-				<Navbar /> */}
+				<FirstNav />
+				{/* <Navbar /> */}
 
 				<Routes>
 					<Route path="/login" element={<LoginPage />} />
