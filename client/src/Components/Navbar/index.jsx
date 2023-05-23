@@ -38,7 +38,7 @@ const Navbar = () => {
 								key={i}
 								onClick={() => handelRoute(page.route)}
 								sx={{ my: 2, color: 'white', display: 'block' }}
-								style={{ color: '#B2BEB5', fontWeight: 'bold' }}
+								style={{ color: '#666666', fontWeight: 'bold' }}
 								className="hoverButton"
 							>
 								{page.name}
