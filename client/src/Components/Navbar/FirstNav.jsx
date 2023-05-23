@@ -5,18 +5,12 @@ import {
 	AppBar,
 	Badge,
 	Box,
-	Collapse,
+	Button,
 	Container,
 	IconButton,
 	InputBase,
-	List,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	ListSubheader,
 	Menu,
 	MenuItem,
-	Select,
 	Toolbar,
 	Typography,
 	useMediaQuery,
@@ -24,9 +18,11 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { auths, pages } from '../../Constants/Navbar';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
@@ -72,6 +68,9 @@ const SecondNav = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 	const isMobile = useMediaQuery('(max-width:800px)');
+	const user = useSelector((state) => state.user);
+
+	console.log(user);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -143,38 +142,22 @@ const SecondNav = () => {
 					/>
 				</Search>
 			</MenuItem>
-			<MenuItem>
-				<IconButton size="large" aria-label="show 4 new mails" color="inherit">
-					<Badge badgeContent={4} color="error">
-						<MailIcon />
-					</Badge>
-				</IconButton>
-				<p>Messages</p>
-			</MenuItem>
-			<MenuItem>
-				<IconButton
-					size="large"
-					aria-label="show 17 new notifications"
-					color="inherit"
-				>
-					<Badge badgeContent={17} color="error">
-						<NotificationsIcon />
-					</Badge>
-				</IconButton>
-				<p>Notifications</p>
-			</MenuItem>
-			<MenuItem onClick={handleProfileMenuOpen}>
-				<IconButton
-					size="large"
-					aria-label="account of current user"
-					aria-controls="primary-search-account-menu"
-					aria-haspopup="true"
-					color="inherit"
-				>
-					<AccountCircle />
-				</IconButton>
-				<p>Profile</p>
-			</MenuItem>
+
+			{pages.map((page) => (
+				<MenuItem>
+					<Link to={page.route}>{page.name}</Link>
+				</MenuItem>
+			))}
+
+			{user ? (
+				<Button>LogOut</Button>
+			) : (
+				auths.map((auth) => (
+					<MenuItem>
+						<Link to={auth.route}>{auth.name}</Link>
+					</MenuItem>
+				))
+			)}
 		</Menu>
 	);
 
@@ -235,7 +218,7 @@ const SecondNav = () => {
 								color="inherit"
 							>
 								<Badge badgeContent={4} color="error">
-									<MailIcon />
+									<AddShoppingCartOutlinedIcon />
 								</Badge>
 							</IconButton>
 							<IconButton
@@ -244,7 +227,7 @@ const SecondNav = () => {
 								color="inherit"
 							>
 								<Badge badgeContent={17} color="error">
-									<NotificationsIcon />
+									<FavoriteBorderOutlinedIcon />
 								</Badge>
 							</IconButton>
 							<IconButton
