@@ -15,3 +15,7 @@ body,
 	padding: 0;
 	font-family: 'Source Sans Pro', sans-serif;
 }
+
+.hoverButton:hover {
+	color: black !important;
+}

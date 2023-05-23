@@ -3,6 +3,7 @@ import '../../Styles/styles.css';
 import { styled, alpha } from '@mui/material/styles';
 import {
 	AppBar,
+	Avatar,
 	Badge,
 	Box,
 	Button,
@@ -22,7 +23,8 @@ import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutl
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { auths, pages } from '../../Constants/Navbar';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLogout } from '../../Store/Slice/slice';
 
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
@@ -67,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const SecondNav = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+	const dispatch = useDispatch();
 	const isMobile = useMediaQuery('(max-width:800px)');
 	const user = useSelector((state) => state.user);
 
@@ -92,6 +95,13 @@ const SecondNav = () => {
 		setMobileMoreAnchorEl(event.currentTarget);
 	};
 
+	const logout = () => {
+		dispatch(setLogout());
+
+		setAnchorEl(null);
+		handleMobileMenuClose();
+	};
+
 	const menuId = 'primary-search-account-menu';
 	const renderMenu = (
 		<Menu
@@ -111,6 +121,15 @@ const SecondNav = () => {
 		>
 			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
 			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			{user && (
+				<Button
+					variant="outlined"
+					style={{ color: 'black', marginLeft: '10px' }}
+					onClick={logout}
+				>
+					LogOut
+				</Button>
+			)}
 		</Menu>
 	);
 
@@ -143,17 +162,23 @@ const SecondNav = () => {
 				</Search>
 			</MenuItem>
 
-			{pages.map((page) => (
-				<MenuItem>
+			{pages.map((page, i) => (
+				<MenuItem key={i} onClick={handleMenuClose}>
 					<Link to={page.route}>{page.name}</Link>
 				</MenuItem>
 			))}
 
 			{user ? (
-				<Button>LogOut</Button>
+				<Button
+					variant="outlined"
+					style={{ color: 'black', marginLeft: '10px' }}
+					onClick={logout}
+				>
+					LogOut
+				</Button>
 			) : (
-				auths.map((auth) => (
-					<MenuItem>
+				auths.map((auth, i) => (
+					<MenuItem key={i} onClick={handleMenuClose}>
 						<Link to={auth.route}>{auth.name}</Link>
 					</MenuItem>
 				))
@@ -239,7 +264,15 @@ const SecondNav = () => {
 								onClick={handleProfileMenuOpen}
 								color="inherit"
 							>
-								<AccountCircle />
+								{user ? (
+									<Avatar
+										alt="Remy Sharp"
+										src={user?.avatar}
+										// sx={{ width: 56, height: 56 }}
+									/>
+								) : (
+									<AccountCircle />
+								)}
 							</IconButton>
 						</Box>
 					</Toolbar>

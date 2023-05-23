@@ -17,6 +17,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { baseUrl } from '../../Config/ServerUrl';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../../Store/Slice/slice';
 
 const regularExpression =
 	/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -31,6 +33,8 @@ const userSchema = yup.object().shape({
 
 const index = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({
 			initialValues: {
@@ -52,10 +56,14 @@ const index = () => {
 
 						if (data.status === 'Success') {
 							toast.success(data.message);
-							localStorage.setItem('token', data.token);
+							dispatch(
+								setLogin({
+									token: data.token,
+								})
+							);
 							setTimeout(() => {
 								navigate('/');
-							}, 5000);
+							}, 2000);
 						}
 					});
 			},
@@ -109,6 +117,7 @@ const index = () => {
 						error={!!touched.password && !!errors.password}
 						helperText={touched.password && errors.password}
 						autoComplete="current-password"
+						autoFocus
 					/>
 
 					<FormControlLabel
