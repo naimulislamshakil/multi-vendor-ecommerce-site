@@ -1,6 +1,13 @@
 import { CssBaseline } from '@mui/material';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { FirstNav, Navbar, LoginPage, SingUpPage, HomePage } from './Route.js';
+import {
+	FirstNav,
+	Navbar,
+	LoginPage,
+	SingUpPage,
+	HomePage,
+	CategoryProductPage,
+} from './Route.js';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
@@ -55,6 +62,7 @@ function App() {
 					<Route path="/" element={<HomePage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/sing-up" element={<SingUpPage />} />
+					<Route path="/category/:name" element={<CategoryProductPage />} />
 				</Routes>
 			</main>
 			<ToastContainer
