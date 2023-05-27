@@ -5,6 +5,7 @@ import {
 	Button,
 	Checkbox,
 	Container,
+	CssBaseline,
 	FormControlLabel,
 	Grid,
 	TextField,
@@ -40,18 +41,13 @@ const index = () => {
 				})
 					.then((res) => res.json())
 					.then((data) => {
+						console.log(data.status);
 						if (data.status === 'Success') {
 							toast.success(data.message);
-							setTimeout(() => {
-								navigate('/login');
-							}, 3000);
 						}
 
 						if (data.status === 'Failed') {
 							toast.error(data.message);
-							setTimeout(() => {
-								navigate('/login');
-							}, 3000);
 						}
 					});
 			},
@@ -74,6 +70,7 @@ const index = () => {
 
 	return (
 		<Container component="main" maxWidth="xs">
+			<CssBaseline />
 			<Box
 				sx={{
 					marginTop: 8,

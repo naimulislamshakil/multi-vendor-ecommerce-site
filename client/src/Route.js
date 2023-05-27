@@ -4,6 +4,7 @@ import FirstNav from './Components/Navbar/FirstNav.jsx';
 import Navbar from './Components/Navbar/index.jsx';
 import HomePage from './Pages/HomePage/index.jsx';
 import CategoryProductPage from './Pages/Category/CategoryProductPage.jsx';
+import AddBrandPage from './Pages/AddBrandPage/index.jsx';
 
 export {
 	FirstNav,
@@ -12,4 +13,5 @@ export {
 	SingUpPage,
 	HomePage,
 	CategoryProductPage,
+	AddBrandPage,
 };

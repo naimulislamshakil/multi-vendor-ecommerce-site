@@ -7,6 +7,7 @@ import {
 	SingUpPage,
 	HomePage,
 	CategoryProductPage,
+	AddBrandPage,
 } from './Route.js';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,7 +35,7 @@ function App() {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.status === 'Failed') {
-					navigate('/login');
+					// navigate('/login');
 				} else {
 					dispatch(
 						setUser({
@@ -44,12 +45,6 @@ function App() {
 				}
 			});
 	}, [dispatch, navigate, token]);
-
-	useEffect(() => {
-		if (!user || !token) {
-			navigate('/login');
-		}
-	}, [user, token, navigate]);
 
 	return (
 		<div className="app">
@@ -63,6 +58,7 @@ function App() {
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/sing-up" element={<SingUpPage />} />
 					<Route path="/category/:name" element={<CategoryProductPage />} />
+					<Route path="/add-brand" element={<AddBrandPage />} />
 				</Routes>
 			</main>
 			<ToastContainer

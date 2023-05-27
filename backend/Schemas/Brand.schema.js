@@ -36,9 +36,6 @@ const brandSchema = mongoose.Schema(
 				zipCode: {
 					type: Number,
 				},
-				addressType: {
-					type: String,
-				},
 			},
 		],
 		product: [
