@@ -19,25 +19,27 @@ const brandSchema = mongoose.Schema(
 		website: String,
 		phoneNumber: String,
 		helpLine: String,
-		addresses: [
-			{
-				country: {
-					type: String,
-				},
-				city: {
-					type: String,
-				},
-				address1: {
-					type: String,
-				},
-				address2: {
-					type: String,
-				},
-				zipCode: {
-					type: Number,
-				},
+		addresses: {
+			country: {
+				type: String,
 			},
-		],
+			city: {
+				type: String,
+			},
+			state: {
+				type: String,
+			},
+			address1: {
+				type: String,
+			},
+			address2: {
+				type: String,
+			},
+			zipCode: {
+				type: Number,
+			},
+		},
+
 		product: [
 			{
 				type: ObjectId,

@@ -15,6 +15,8 @@ import {
 import { Country, State, City } from 'country-state-city';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { baseUrl } from '../../Config/ServerUrl';
+import { toast } from 'react-toastify';
 
 const phoneRegex = /^[+]{0,1}[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]{8,14}$/;
 const helpLineRegex = /^[0-9]{4,14}$/;
@@ -72,8 +74,37 @@ const index = () => {
 				description: '',
 			},
 			validationSchema: addBrandSchema,
-			onSubmit: async (values) => {
-				console.log(values);
+			onSubmit: async (values, { resetForm }) => {
+				const data = {
+					name: values.name,
+					description: values.description,
+					email: values.email,
+					website: values.website,
+					phoneNumber: values.phone,
+					helpLine: values.helpline,
+					addresses: {
+						country: values.country,
+						city: values.city,
+						state: values.state,
+						address1: values.address1,
+						address2: values.address2,
+						zipCode: values.zip,
+					},
+				};
+
+				await fetch(`${baseUrl}/brand/create`, {
+					method: 'POST',
+					headers: { 'content-type': 'application/json' },
+					body: JSON.stringify(data),
+				})
+					.then((res) => res.json())
+					.then((data) => {
+						if (data.status === 'Success') {
+							toast.success(data.message);
+							resetForm();
+						}
+					})
+					.catch((err) => console.log(err));
 			},
 		});
 
@@ -98,7 +129,6 @@ const index = () => {
 						<TextField
 							fullWidth
 							type="text"
-							required
 							name="name"
 							value={values.name}
 							onBlur={handleBlur}
@@ -106,7 +136,7 @@ const index = () => {
 							error={!!touched.name && !!errors.name}
 							helperText={touched.name && errors.name}
 							variant="outlined"
-							label="Brand Name"
+							label="Brand Name *"
 						/>
 					</Box>
 
@@ -114,7 +144,6 @@ const index = () => {
 						<TextField
 							fullWidth
 							type="email"
-							required
 							name="email"
 							value={values.email}
 							onBlur={handleBlur}
@@ -122,7 +151,7 @@ const index = () => {
 							error={!!touched.email && !!errors.email}
 							helperText={touched.email && errors.email}
 							variant="outlined"
-							label="Brand Email"
+							label="Brand Email *"
 						/>
 					</Box>
 					<Box marginTop="10px">
@@ -143,7 +172,6 @@ const index = () => {
 						<TextField
 							fullWidth
 							type="text"
-							required
 							name="phone"
 							value={values.phone}
 							onBlur={handleBlur}
@@ -151,13 +179,12 @@ const index = () => {
 							error={!!touched.phone && !!errors.phone}
 							helperText={touched.phone && errors.phone}
 							variant="outlined"
-							label="Brand Phone Number"
+							label="Brand Phone Number *"
 							style={{ marginRight: '5px' }}
 						/>
 						<TextField
 							fullWidth
 							type="text"
-							required
 							name="helpline"
 							value={values.helpline}
 							onBlur={handleBlur}
@@ -165,14 +192,13 @@ const index = () => {
 							error={!!touched.helpline && !!errors.helpline}
 							helperText={touched.helpline && errors.helpline}
 							variant="outlined"
-							label="Brand HelpLine Number"
+							label="Brand HelpLine Number *"
 						/>
 					</Box>
 
 					<Box marginTop="10px">
 						<TextField
 							fullWidth
-							required
 							type="text"
 							name="address1"
 							value={values.address1}
@@ -181,7 +207,7 @@ const index = () => {
 							error={!!touched.address1 && !!errors.address1}
 							helperText={touched.address1 && errors.address1}
 							variant="outlined"
-							label="Address 1"
+							label="Address 1 *"
 						/>
 						<TextField
 							fullWidth
@@ -199,13 +225,12 @@ const index = () => {
 
 						<Box marginTop="10px" display="flex" justifyContent="center">
 							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">Country</InputLabel>
+								<InputLabel id="demo-simple-select-label">Country *</InputLabel>
 								<Select
-									required
 									labelId="demo-simple-select-label"
 									id="demo-simple-select"
 									type="text"
-									label="Country"
+									label="Country *"
 									name="country"
 									value={values.country}
 									onBlur={handleBlur}
@@ -227,12 +252,11 @@ const index = () => {
 							</FormControl>
 
 							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">State</InputLabel>
+								<InputLabel id="demo-simple-select-label">State *</InputLabel>
 								<Select
-									required
 									labelId="demo-simple-select-label"
 									id="demo-simple-select"
-									label="State"
+									label="State *"
 									type="text"
 									name="state"
 									value={values.state}
@@ -280,7 +304,6 @@ const index = () => {
 
 						<TextField
 							fullWidth
-							required
 							type="text"
 							name="zip"
 							value={values.zip}
@@ -289,7 +312,7 @@ const index = () => {
 							error={!!touched.zip && !!errors.zip}
 							helperText={touched.zip && errors.zip}
 							variant="outlined"
-							label="Zip Code"
+							label="Zip Code *"
 							style={{ marginTop: '10px' }}
 						/>
 					</Box>
@@ -297,7 +320,6 @@ const index = () => {
 					<Box marginTop="10px">
 						<TextField
 							fullWidth
-							required
 							multiline
 							name="description"
 							value={values.description}
@@ -308,7 +330,7 @@ const index = () => {
 							type="text"
 							maxRows={4}
 							variant="outlined"
-							label="Brand Description"
+							label="Brand Description *"
 						/>
 					</Box>
 
