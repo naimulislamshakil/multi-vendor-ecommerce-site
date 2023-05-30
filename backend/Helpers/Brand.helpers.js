@@ -14,3 +14,19 @@ exports.createBrandHelper = async (req, res) => {
 		});
 	}
 };
+
+exports.getAllBrandName = async (req, res) => {
+	try {
+		const BrandName = await BrandService.getAllBrandName();
+		res.status(200).json({
+			status: 'Success',
+			message: 'Brand Name Get Successfully.',
+			BrandName,
+		});
+	} catch (error) {
+		res.status(404).json({
+			status: 'Failed',
+			message: error.message,
+		});
+	}
+};
