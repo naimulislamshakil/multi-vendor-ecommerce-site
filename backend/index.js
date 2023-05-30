@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 5000;
 const UserRoute = require('./Routes/v1/User.route');
 const brandRoute = require('./Routes/v1/Brand.route.js');
+const productRoute = require('./Routes/v1/Product.route');
 require('dotenv').config();
 
 // ADD MADILWARE
@@ -22,6 +23,7 @@ mongoose
 
 app.use('/', UserRoute);
 app.use('/brand', brandRoute);
+app.use('/product', productRoute);
 
 app.get('/', (req, res) => {
 	res.send('<h1>How are you?</h1>');
