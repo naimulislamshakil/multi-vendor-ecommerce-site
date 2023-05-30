@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/index.jsx';
 import HomePage from './Pages/HomePage/index.jsx';
 import CategoryProductPage from './Pages/Category/CategoryProductPage.jsx';
 import AddBrandPage from './Pages/AddBrandPage/index.jsx';
+import AddProductPage from './Pages/AddProductPage/index.jsx';
 
 export {
 	FirstNav,
@@ -14,4 +15,5 @@ export {
 	HomePage,
 	CategoryProductPage,
 	AddBrandPage,
+	AddProductPage,
 };

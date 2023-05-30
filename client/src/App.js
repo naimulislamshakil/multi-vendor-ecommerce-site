@@ -8,6 +8,7 @@ import {
 	HomePage,
 	CategoryProductPage,
 	AddBrandPage,
+	AddProductPage,
 } from './Route.js';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,6 +60,7 @@ function App() {
 					<Route path="/sing-up" element={<SingUpPage />} />
 					<Route path="/category/:name" element={<CategoryProductPage />} />
 					<Route path="/add-brand" element={<AddBrandPage />} />
+					<Route path="/add-product" element={<AddProductPage />} />
 				</Routes>
 			</main>
 			<ToastContainer
