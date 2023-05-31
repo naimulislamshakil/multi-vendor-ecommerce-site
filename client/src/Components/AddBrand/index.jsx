@@ -47,13 +47,10 @@ const addBrandSchema = yup.object().shape({
 
 const index = () => {
 	const isMobile = useMediaQuery('(max-width:800px)');
-	const [country, setCountry] = useState('Bangladesh');
 	const [countryCode, setCountryCode] = useState('BD');
 	const [states, setStates] = useState([]);
-	const [state, setState] = useState('');
 	const [stateCode, setStateCode] = useState('');
 	const [citys, setCitys] = useState([]);
-	const [city, setCity] = useState('');
 
 	const countries = Country.getAllCountries();
 

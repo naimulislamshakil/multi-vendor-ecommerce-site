@@ -46,6 +46,34 @@ const productSchema = mongoose.Schema({
 			required: true,
 		},
 	],
+	discount: {
+		type: Number,
+		default: 0,
+	},
+	rating: {
+		type: Number,
+		required: true,
+	},
+	total_sell: {
+		type: Number,
+		default: 0,
+	},
+	img: [
+		{
+			type: String,
+			required: true,
+		},
+	],
+	tax: {
+		type: Number,
+		required: true,
+		default: 0,
+	},
+	vat: {
+		type: Number,
+		required: true,
+		default: 0,
+	},
 });
 
 const PRODUCT = mongoose.model('Product', productSchema);
