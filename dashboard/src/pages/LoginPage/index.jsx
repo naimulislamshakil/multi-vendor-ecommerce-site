@@ -1,10 +1,9 @@
-import React from 'react'
-import Login from "../../components/Login/index.jsx"
+import React, { lazy } from 'react';
+
+const Login = lazy(() => import('../../components/Login/index.jsx'));
 
 const index = () => {
-  return (
-   <Login/>
-  )
-}
+	return <Login />;
+};
 
-export default index
+export default index;

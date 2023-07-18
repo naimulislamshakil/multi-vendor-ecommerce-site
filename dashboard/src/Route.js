@@ -1,7 +1,11 @@
+import { lazy } from 'react';
+
 import Topbar from './pages/Topbar';
 import Sidebars from './pages/Sidebar';
-import LoginPage from "./pages/LoginPage/index.jsx"
-import HomePage from "./pages/HomePage/index.jsx"
-import RegisterPage from './pages/RegisterPage/index.jsx';
 
-export { Topbar, Sidebars, LoginPage, HomePage, RegisterPage };
+const AdminLoginPage = lazy(() => import('./pages/Admin/Login.jsx'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage/index.jsx'));
+const HomePage = lazy(() => import('./pages/HomePage/index.jsx'));
+const LoginPage = lazy(() => import('./pages/LoginPage/index.jsx'));
+
+export { Topbar, Sidebars, LoginPage, HomePage, RegisterPage, AdminLoginPage };

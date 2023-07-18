@@ -1,10 +1,9 @@
-import React from 'react'
-import Home from "../../components/Home/index.jsx"
+import React, { lazy } from 'react';
+
+const Home = lazy(() => import('../../components/Home/index.jsx'));
 
 const index = () => {
-  return (
-    <Home/>
-  )
-}
+	return <Home />;
+};
 
-export default index
+export default index;
