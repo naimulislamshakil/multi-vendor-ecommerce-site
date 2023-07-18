@@ -16,18 +16,28 @@ import { Topbar } from '../../Route';
 import { tokens } from '../../theme';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const index = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
+	const navigate = useNavigate();
 
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({
 			initialValues,
 			validationSchema: userSchema,
 			onSubmit: async (values) => {
-				console.log(values);
+				const res = await axios.post('http://localhost:5000/register', values);
+				console.log(res.data);
+
+				if (res.data.status === 'Success') {
+					toast.success(res.data.message);
+
+					navigate('/login');
+				}
 			},
 		});
 	return (

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema(
 	{
@@ -23,9 +24,23 @@ const userSchema = mongoose.Schema(
 			required: true,
 			min: 5,
 		},
+		role: {
+			type: String,
+			enum: ['Seller', 'Admin'],
+			default: 'Seller',
+		},
 	},
 	{ timestamps: true }
 );
+
+userSchema.pre('save', function (next) {
+	if (!this.isModified('password')) return next();
+
+	const password = this.password;
+	const hashPassword = bcrypt.hashSync(password, 10);
+	this.password = hashPassword;
+	next();
+});
 
 const USER = mongoose.model('user', userSchema);
 

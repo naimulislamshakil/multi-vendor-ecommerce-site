@@ -2,9 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
 	name: 'slice',
-	initialState: {
-		mode: 'dark',
-	},
+	initialState: {},
 	reducers: {},
 });
 
