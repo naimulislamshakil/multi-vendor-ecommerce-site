@@ -32,6 +32,7 @@ const index = () => {
 	useEffect(() => {
 		if (error) {
 			toast.error(error);
+			dispatch(messageClear());
 		}
 
 		if (message) {

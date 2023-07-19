@@ -41,8 +41,6 @@ exports.loginUserCollaction = async (req, res) => {
 
 		const token = generateToken(email, user._id, user.roll);
 
-		const { password: pass, ...other } = user.toObject();
-
 		res.cookie('accessToken', token, {
 			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		});
@@ -50,8 +48,29 @@ exports.loginUserCollaction = async (req, res) => {
 		res.status(200).json({
 			status: 'Success',
 			message: 'User Successfully Login..',
-			user: other,
 			token,
+		});
+	} catch (error) {
+		res.status(404).json({
+			status: 'Failed',
+			message: error.message,
+		});
+	}
+};
+
+exports.persistentCollaction = async (req, res) => {
+	try
+	{
+		const { email } = req.user
+		const user = await Service.persistentService(email)
+		
+		const { password, ...other } = user.toObject();
+
+
+		res.status(200).json({
+			status: 'Success',
+			message: 'User Successfully Login..',
+			user:other
 		});
 	} catch (error) {
 		res.status(404).json({

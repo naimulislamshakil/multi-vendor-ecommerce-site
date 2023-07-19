@@ -30,17 +30,18 @@ const index = () => {
 	const navigate = useNavigate();
 	const { loading, error, message } = useSelector((state) => state.auth);
 
-	useEffect(() => {
+	useEffect(() =>
+	{
 		if (error) {
-			toast.error(error);
-			dispatch(messageClear());
-		}
-		if (message) {
-			toast.success(message);
-			dispatch(messageClear());
-			navigate('/dashboard');
-		}
-	}, [error, message]);
+		toast.error(error);
+		dispatch(messageClear());
+	}
+	if (message) {
+		toast.success(message);
+		dispatch(messageClear());
+		navigate('/dashboard');
+	}
+	},[error, message])
 
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({

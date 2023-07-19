@@ -9,3 +9,9 @@ exports.loginUserService = async (email) => {
 	const user = await USER.findOne({ email });
 	return user;
 };
+
+exports.persistentService = async (email) =>
+{
+	const user = await USER.findOne({ email });
+	return user;
+};

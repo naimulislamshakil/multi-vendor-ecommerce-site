@@ -1,14 +1,12 @@
 import { Box } from '@mui/material';
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { Sidebars, Topbar } from '../../Route';
 
 const index = () => {
 	return (
-		<Box className="app">
+		<Box>
 			<Sidebars />
-			<main className="content">
-				<Topbar />
-			</main>
 		</Box>
 	);
 };
