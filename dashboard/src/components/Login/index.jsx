@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Avatar,
 	Box,
@@ -12,40 +13,52 @@ import {
 	useTheme,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { PropagateLoader } from 'react-spinners';
 import { Topbar } from '../../Route';
 import { tokens } from '../../theme';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { setLogin } from '../../store/slice/slice';
+import { login, messageClear } from '../../store/Reducer/authReducer';
+import { toast } from 'react-toastify';
 
 const index = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { loading, error, message } = useSelector((state) => state.auth);
+
+	useEffect(() => {
+		if (error) {
+			toast.error(error);
+			dispatch(messageClear());
+		}
+		if (message) {
+			toast.success(message);
+			dispatch(messageClear());
+			navigate('/dashboard');
+		}
+	}, [error, message]);
 
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
 		useFormik({
 			initialValues,
 			validationSchema: userSchema,
 			onSubmit: async (values) => {
-				const res = await axios.post('http://localhost:5000/login', values);
-
-				dispatch(
-					setLogin({
-						token: res.data.token,
-						user: res.data.user,
-					})
-				);
-
-				if (res.data.status === 'Success') {
-					navigate('/');
-				}
+				dispatch(login(values));
 			},
 		});
+
+	const overrideStyle = {
+		display: 'flex',
+		margin: '0 auto',
+		height: '24px',
+		justifyContent: 'center',
+		alignItems: 'center',
+	};
+
 	return (
 		<Box>
 			<Topbar />
@@ -106,6 +119,7 @@ const index = () => {
 						label="Remember me"
 					/>
 					<Button
+						disabled={loading ? true : false}
 						type="submit"
 						fullWidth
 						variant="contained"
@@ -115,7 +129,11 @@ const index = () => {
 							background: colors.greenAccent[500],
 						}}
 					>
-						Sign In
+						{loading ? (
+							<PropagateLoader color="#fff" cssOverride={overrideStyle} />
+						) : (
+							'Sign In'
+						)}
 					</Button>
 					<Grid container>
 						<Grid item xs>

@@ -22,7 +22,7 @@ exports.loginUserCollaction = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 		const user = await Service.loginUserService(email);
-
+		console.log(email);
 		if (!user) {
 			return res.status(404).json({
 				status: 'Failed',
@@ -42,6 +42,10 @@ exports.loginUserCollaction = async (req, res) => {
 		const token = generateToken(email, user._id, user.roll);
 
 		const { password: pass, ...other } = user.toObject();
+
+		res.cookie('accessToken', token, {
+			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		});
 
 		res.status(200).json({
 			status: 'Success',
