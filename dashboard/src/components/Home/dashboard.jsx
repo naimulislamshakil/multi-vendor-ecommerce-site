@@ -1,21 +1,29 @@
-import { Box, Button, useTheme } from '@mui/material';
+import {
+	Avatar,
+	Box,
+	Button,
+	Grid,
+	IconButton,
+	Typography,
+	useTheme,
+} from '@mui/material';
 import React from 'react';
 import { tokens } from '../../theme';
+import { Link } from 'react-router-dom';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import CurrencyRubleOutlinedIcon from '@mui/icons-material/CurrencyRubleOutlined';
 import Diversity3OutlinedIcon from '@mui/icons-material/Diversity3Outlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Header from '../Header';
-// import LineChart from '../../components/LineChart';
-// import GeographyChart from '../../components/GeographyChart';
-// import BarChart from '../../components/BarChart';
+import BarChart from '../BarChart';
 import StatBox from '../StatBox';
-// import ProgressCircle from '../../components/ProgressCircle';
+import RecentMessage from '../RecentMessage';
 
 const Dashboard = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
+	const user = JSON.parse(localStorage.getItem('user'));
 
 	return (
 		<Box m="20px">
@@ -122,6 +130,53 @@ const Dashboard = () => {
 							/>
 						}
 					/>
+				</Box>
+
+				{/* row 2 */}
+				<Box
+					gridColumn="span 8"
+					gridRow="span 2"
+					backgroundColor={colors.primary[400]}
+				>
+					<Box height="250px" m="-20px 0 0 0">
+						<BarChart />
+					</Box>
+				</Box>
+				<Box
+					gridColumn="span 4"
+					gridRow="span 2"
+					backgroundColor={colors.primary[400]}
+					overflow="auto"
+				>
+					<Box
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+						borderBottom={`4px solid ${colors.primary[500]}`}
+						colors={colors.grey[100]}
+						p="15px"
+					>
+						<Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+							Recent Message
+						</Typography>
+
+						<Link
+							style={{
+								textDecoration: 'none',
+								color: '#e0e0e0',
+								fontWeight: '600',
+								fontSize: '16px',
+							}}
+							to="/dashboard/chat-sellers"
+						>
+							View All
+						</Link>
+					</Box>
+
+					{/* message */}
+					<RecentMessage />
+
+					<RecentOrders/>
 				</Box>
 			</Box>
 		</Box>
