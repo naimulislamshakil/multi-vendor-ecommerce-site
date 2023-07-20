@@ -2,7 +2,6 @@
 import { Box, Button, useTheme } from '@mui/material';
 import React from 'react';
 import { tokens } from '../../theme';
-import Header from '../Header';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { data } from '../../constants/data';
 
@@ -57,11 +56,7 @@ const index = () => {
 		},
 	];
 	return (
-		<Box m="20px">
-			<Header
-				title="CONTACTS"
-				subtitle="List of Contacts for Future Reference"
-			/>
+		<Box>
 			<Box
 				m="40px 0 0 0"
 				height="75vh"

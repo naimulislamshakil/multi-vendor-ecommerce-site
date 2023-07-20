@@ -1,12 +1,4 @@
-import {
-	Avatar,
-	Box,
-	Button,
-	Grid,
-	IconButton,
-	Typography,
-	useTheme,
-} from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { tokens } from '../../theme';
 import { Link } from 'react-router-dom';
