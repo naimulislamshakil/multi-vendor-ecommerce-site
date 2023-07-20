@@ -19,11 +19,11 @@ import Header from '../Header';
 import BarChart from '../BarChart';
 import StatBox from '../StatBox';
 import RecentMessage from '../RecentMessage';
+import RecentOrders from '../RecentOrders/index.jsx';
 
 const Dashboard = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
-	const user = JSON.parse(localStorage.getItem('user'));
 
 	return (
 		<Box m="20px">
@@ -175,9 +175,9 @@ const Dashboard = () => {
 
 					{/* message */}
 					<RecentMessage />
-
-					<RecentOrders/>
 				</Box>
+
+				<RecentOrders />
 			</Box>
 		</Box>
 	);
